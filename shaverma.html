@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шаверма "ОТДУШИ" | Вкус, который запомнится</title>
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E85A2A;
+            --secondary: #2EC4B6;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --background-light: #F9F9F9;
+            --border: #EEEEEE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--background);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--text);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style-type: none;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .phone {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .cart-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .cart-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .hero-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Menu Section */
+        .menu-section {
+            padding: 70px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .menu-category {
+            padding: 8px 20px;
+            background-color: var(--background-light);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .menu-category.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .menu-category:hover {
+            border-color: var(--primary);
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .menu-item {
+            background-color: var(--background);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-item-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .menu-item-content {
+            padding: 20px;
+        }
+        
+        .menu-item-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .menu-item-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .menu-item-price {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 70px 0;
+            background-color: var(--background-light);
+        }
+        
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .about-image {
+            height: 400px;
+            background-image: url('https://images.unsplash.com/photo-1617651524211-23485a7aaff4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+        }
+        
+        .about-content h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .about-content p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 107, 53, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Back to cases link */
+        .back-to-cases {
+            display: block;
+            margin: 40px auto;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: var(--background-light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            text-decoration: none;
+            width: fit-content;
+            transition: all 0.3s;
+        }
+        
+        .back-to-cases:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .footer-about p {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+        
+        .footer-heading {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links {
+            list-style-type: none;
+        }
+        
+        .footer-link {
+            margin-bottom: 8px;
+        }
+        
+        .footer-link a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link a:hover {
+            color: var(--primary);
+        }
+        
+        .contact-info {
+            list-style-type: none;
+        }
+        
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #cccccc;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999999;
+            font-size: 0.9rem;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                margin: 10px 0;
+            }
+            
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">ОТДУШИ<span> шаверма</span></a>
+            
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">Главная</a></li>
+                <li><a href="#menu" class="nav-link">Меню</a></li>
+                <li><a href="#about" class="nav-link">О нас</a></li>
+                <li><a href="#" class="nav-link">Доставка</a></li>
+                <li><a href="#" class="nav-link">Контакты</a></li>
+            </ul>
+            
+            <div class="header-actions">
+                <a href="tel:+78123456789" class="phone">+7 (812) 345-67-89</a>
+                <button class="cart-btn">Корзина (0)</button>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Самая вкусная шаверма в городе!</h1>
+            <p>Готовим по секретным рецептам из свежих ингредиентов. Быстрая доставка и возможность самовывоза.</p>
+            <a href="#menu" class="hero-btn">Посмотреть меню</a>
+        </div>
+    </section>
+    
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Наше меню</h2>
+                <p>Широкий выбор шавермы, снеков и напитков. Всё готовится из свежих ингредиентов.</p>
+            </div>
+            
+            <div class="menu-categories">
+                <div class="menu-category active">Все</div>
+                <div class="menu-category">Шаверма</div>
+                <div class="menu-category">Снеки</div>
+                <div class="menu-category">Напитки</div>
+                <div class="menu-category">Комбо</div>
+            </div>
+            
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1573333515743-56d57731dd1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="menu-item-content">
+                        <h3 class="menu-item-title">Классическая шаверма</h3>
+                        <p class="menu-item-description">Куриное филе, свежие овощи, соус и лаваш</p>
+                        <div class="menu-item-price">250 ₽</div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1674315547795-f2ed6c6b7d07?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="menu-item-content">
+                        <h3 class="menu-item-title">Шаверма острая</h3>
+                        <p class="menu-item-description">Куриное филе, острый перец, свежие овощи и фирменный соус</p>
+                        <div class="menu-item-price">290 ₽</div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1546069901-d5bfd2cbfb1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="menu-item-content">
+                        <h3 class="menu-item-title">Вегетарианская шаверма</h3>
+                        <p class="menu-item-description">Хумус, свежие овощи, зелень и легкий соус</p>
+                        <div class="menu-item-price">230 ₽</div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="menu-item-content">
+                        <h3 class="menu-item-title">Картофель фри</h3>
+                        <p class="menu-item-description">Хрустящий картофель с соусом на выбор</p>
+                        <div class="menu-item-price">150 ₽</div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="menu-item-content">
+                        <h3 class="menu-item-title">Пицца мини</h3>
+                        <p class="menu-item-description">Мини-пицца с сыром и пепперони</p>
+                        <div class="menu-item-price">200 ₽</div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1594632306491-d196ef5ebc7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="menu-item-content">
+                        <h3 class="menu-item-title">Кола 0.5л</h3>
+                        <p class="menu-item-description">Прохладительный газированный напиток</p>
+                        <div class="menu-item-price">90 ₽</div>
+                        <button class="add-to-cart">В корзину</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about-section">
+        <div class="container about-container">
+            <div class="about-image"></div>
+            <div class="about-content">
+                <h2>О кафе "ОТДУШИ"</h2>
+                <p>Наше кафе быстрого питания специализируется на приготовлении лучшей шавермы в городе уже более 5 лет. Мы используем только свежие ингредиенты и готовим каждый заказ индивидуально.</p>
+                <p>В нашем меню вы найдете разнообразные виды шавермы, закуски, десерты и напитки. Все блюда готовятся с душой и любовью к своему делу.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Свежие ингредиенты</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Быстрая доставка</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Удобная локация</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <span>Доступные цены</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <a href="cases.html" class="back-to-cases">← Назад к кейсам</a>
+    
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-about">
+                <span class="footer-logo">ОТДУШИ</span>
+                <p>Вкусная шаверма и другая еда в самом центре города. Приходите к нам или заказывайте доставку на дом.</p>
+            </div>
+            
+            <div class="footer-links-container">
+                <h3 class="footer-heading">Быстрые ссылки</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">Главная</a></li>
+                    <li class="footer-link"><a href="#menu">Меню</a></li>
+                    <li class="footer-link"><a href="#about">О нас</a></li>
+                    <li class="footer-link"><a href="#">Доставка</a></li>
+                    <li class="footer-link"><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3 class="footer-heading">Контакты</h3>
+                <ul class="contact-info">
+                    <li>ул. Центральная, 123</li>
+                    <li>+7 (812) 345-67-89</li>
+                    <li>info@otdushi.ru</li>
+                    <li>Пн-Вс: 10:00 - 22:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <div class="container">
+                © 2023 Шаверма "ОТДУШИ". Все права защищены.
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT-эксплорер для Zero Colony</title>
+    <style>
+        :root {
+            --background: #0A0E17;
+            --surface: #131A2A;
+            --accent: #4AD3FF;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B5C3;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: var(--surface);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .hero-content {
+            width: 30%;
+        }
+        
+        .hero-map {
+            width: 68%;
+            background: var(--surface);
+            border-radius: 10px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(74, 211, 255, 0.2);
+        }
+        
+        .map-container {
+            height: 100%;
+            position: relative;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23131A2A"/><path d="M0 20 H100 M0 40 H100 M0 60 H100 M0 80 H100 M20 0 V100 M40 0 V100 M60 0 V100 M80 0 V100" stroke="%232A3A59" stroke-width="1"/></svg>');
+        }
+        
+        .map-location {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(74, 211, 255, 0.2);
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .map-location:hover {
+            transform: scale(1.1);
+            background: rgba(74, 211, 255, 0.4);
+        }
+        
+        .location-1 { top: 30%; left: 25%; }
+        .location-2 { top: 50%; left: 40%; }
+        .location-3 { top: 20%; left: 60%; }
+        .location-4 { top: 70%; left: 75%; }
+        
+        .filter-bar {
+            background: var(--surface);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 8px 15px;
+            color: var(--text-secondary);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(74, 211, 255, 0.2);
+            color: var(--accent);
+        }
+        
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .nft-card {
+            background: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .nft-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nft-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(45deg, #2A3A59, #364B73);
+            position: relative;
+        }
+        
+        .nft-details {
+            padding: 15px;
+        }
+        
+        .nft-title {
+            font-size: 1.1rem;
+            margin: 0 0 5px;
+        }
+        
+        .nft-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .nft-price {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: var(--surface);
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(74, 211, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">ZERO COLONY</div>
+        <div class="nav-links">
+            <a href="#">Маркетплейс</a>
+            <a href="#">Коллекции</a>
+            <a href="#">Карта</a>
+            <a href="#">Профиль</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <a href="cases.html" class="back-button">← Назад к кейсам</a>
+        
+        <h1>NFT-эксплорер виртуальных территорий</h1>
+        
+        <div class="hero">
+            <div class="hero-content">
+                <h2>Исследуй цифровые владения</h2>
+                <p>Интерактивная карта позволяет просматривать доступные участки, их характеристики и владельцев в единой экосистеме Zero Colony.</p>
+                <button class="filter-btn active">Все участки</button>
+                <button class="filter-btn">Доступные для покупки</button>
+                <button class="filter-btn">Премиум локации</button>
+            </div>
+            <div class="hero-map">
+                <div class="map-container">
+                    <div class="map-location location-1"></div>
+                    <div class="map-location location-2"></div>
+                    <div class="map-location location-3"></div>
+                    <div class="map-location location-4"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-bar">
+            <button class="filter-btn active">Все</button>
+            <button class="filter-btn">Земля</button>
+            <button class="filter-btn">Здания</button>
+            <button class="filter-btn">Ресурсы</button>
+            <button class="filter-btn">Инфраструктура</button>
+        </div>
+        
+        <div class="nft-grid">
+            <div class="nft-card">
+                <div class="nft-image"></div>
+                <div class="nft-details">
+                    <h3 class="nft-title">Альфа участок #128</h3>
+                    <div class="nft-info">
+                        <span>Площадь: 400 м²</span>
+                        <span>ID: A128</span>
+                    </div>
+                    <div class="nft-info">
+                        <span>Рейтинг: 8.5/10</span>
+                        <span class="nft-price">2.4 ETH</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nft-card">
+                <div class="nft-image"></div>
+                <div class="nft-details">
+                    <h3 class="nft-title">Центральный сектор #42</h3>
+                    <div class="nft-info">
+                        <span>Площадь: 620 м²</span>
+                        <span>ID: C042</span>
+                    </div>
+                    <div class="nft-info">
+                        <span>Рейтинг: 9.2/10</span>
+                        <span class="nft-price">4.7 ETH</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nft-card">
+                <div class="nft-image"></div>
+                <div class="nft-details">
+                    <h3 class="nft-title">Дельта район #305</h3>
+                    <div class="nft-info">
+                        <span>Площадь: 280 м²</span>
+                        <span>ID: D305</span>
+                    </div>
+                    <div class="nft-info">
+                        <span>Рейтинг: 7.8/10</span>
+                        <span class="nft-price">1.9 ETH</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nft-card">
+                <div class="nft-image"></div>
+                <div class="nft-details">
+                    <h3 class="nft-title">Омега участок #76</h3>
+                    <div class="nft-info">
+                        <span>Площадь: 520 м²</span>
+                        <span>ID: O076</span>
+                    </div>
+                    <div class="nft-info">
+                        <span>Рейтинг: 8.9/10</span>
+                        <span class="nft-price">3.5 ETH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

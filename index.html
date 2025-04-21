@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevAppStudio - Технологичные решения для роста бизнеса</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        
+        .bg-gradient {
+            background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#374151',
+                        dark: '#1A1A1A',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-dark">
+    
+    <!-- Первый экран -->
+    <header class="min-h-screen flex items-center bg-gradient py-16 px-4 md:px-8">
+        <div class="container mx-auto max-w-4xl">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Разрабатываем цифровые продукты для бизнеса</h1>
+            <p class="text-xl md:text-2xl mb-10">Приложения, сайты, боты и ИИ-решения — быстро, точно и без бюрократии.</p>
+            <a href="#contacts" class="inline-block bg-primary text-white px-8 py-3 rounded-md font-medium text-lg hover:bg-opacity-90 transition">Обсудить проект</a>
+        </div>
+    </header>
+
+    <!-- Блок "Что мы делаем" -->
+    <section id="services" class="py-16 px-4 md:px-8">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">Что мы создаём</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Мобильные приложения -->
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Мобильные приложения для iOS и Android</h3>
+                </div>
+                
+                <!-- Корпоративные сайты и порталы -->
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Корпоративные сайты и клиентские порталы</h3>
+                </div>
+                
+                <!-- Чат-боты и мини-приложения -->
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Чат-боты, мини-приложения и автоматизация процессов</h3>
+                </div>
+                
+                <!-- Интеграции искусственного интеллекта -->
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Интеграции искусственного интеллекта под задачи бизнеса</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок "Как мы подходим к проектам" -->
+    <section id="approach" class="py-16 px-4 md:px-8 bg-gray-50">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">Как мы подходим к работе</h2>
+            <p class="text-xl leading-relaxed">
+                Мы берём реальную бизнес-задачу и превращаем её в удобный цифровой продукт.
+                Без лишних этапов, долгих согласований и правок ради правок.
+                Анализируем суть, предлагаем понятные решения и берём ответственность за результат.
+            </p>
+        </div>
+    </section>
+
+    <!-- Блок "Проекты" -->
+    <section id="projects" class="py-16 px-4 md:px-8">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">Проекты</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Проект 1: Трекер привычек для сотрудников -->
+                <div class="border border-gray-100 rounded overflow-hidden shadow-sm">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="app/img/habits.png" alt="Трекер привычек для сотрудников" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Трекер привычек для сотрудников</h3>
+                        <p class="text-gray-600 mb-4">Разработали компактную систему управления задачами для небольших бизнес-команд и стартапов. Удобная постановка задач, контроль сроков, отслеживание прогресса. Минимум лишнего — только то, что нужно для эффективной работы.</p>
+                    </div>
+                </div>
+                
+                <!-- Проект 2: ИИ-помощник для компании по продаже автозапчастей -->
+                <div class="border border-gray-100 rounded overflow-hidden shadow-sm">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <span class="text-3xl font-bold text-gray-300">NDA</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">ИИ-консультант для компании по продаже автозапчастей</h3>
+                        <p class="text-gray-600 mb-4">Разработали и обучили ИИ-бота для консультации клиентов по подбору автозапчастей. Бот внедрен на сайт компании и в рабочий чат, умеет определять совместимость деталей, предлагать аналоги, консультировать по срокам доставки и отвечать на технические вопросы. Повысили конверсию заявок на 32% и сократили нагрузку на менеджеров.</p>
+                    </div>
+                </div>
+                
+                <!-- Проект 3: Онлайн-меню и заказ -->
+                <div class="border border-gray-100 rounded overflow-hidden shadow-sm">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="app/img/food.png" alt="Онлайн-меню для ресторанов" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Онлайн-меню и заказ для кафе и ресторанов</h3>
+                        <p class="text-gray-600 mb-4">Решение для заведений общепита: онлайн-меню с возможностью оформления заказов. Интуитивный интерфейс для клиентов и удобная админка для заведений. Поддержка мобильных приложений, веб-версии и Telegram Mini Apps.</p>
+                    </div>
+                </div>
+                
+                <!-- Проект 4: Криптокошелек -->
+                <div class="border border-gray-100 rounded overflow-hidden shadow-sm">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="app/img/wallet.png" alt="Криптокошелек" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Криптокошелек для покупок в магазинах</h3>
+                        <p class="text-gray-600 mb-4">Разработка мобильного криптокошелька с возможностью быстрой оплаты товаров в магазинах России. Безопасные переводы, поддержка популярных валют и простой процесс оплаты — кошелек ориентирован на удобство в реальной жизни.</p>
+                    </div>
+                </div>
+                
+                <!-- Проект 5: Обозреватель цифровых активов -->
+                <div class="border border-gray-100 rounded overflow-hidden shadow-sm">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <video class="w-full h-full object-cover" autoplay loop muted playsinline onclick="this.paused ? this.play() : this.pause()">
+                            <source src="app/video/case-mars.mov" type="video/quicktime">
+                        </video>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Обозреватель цифровых активов</h3>
+                        <p class="text-gray-600 mb-4">Создали удобную платформу для визуализации коллекций цифровых активов. Пользователи могут быстро просматривать свои владения, управлять лотами и планировать сделки. Простой интерфейс, высокая скорость работы и чистый дизайн.</p>
+                    </div>
+                </div>
+                
+                <!-- Проект 6: Платформа для приёма заявок от жильцов ЖКХ -->
+                <div class="border border-gray-100 rounded overflow-hidden shadow-sm">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <span class="text-3xl font-bold text-gray-300">NDA</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Платформа для приёма заявок от жильцов ЖКХ</h3>
+                        <p class="text-gray-600 mb-4">Создали систему для обработки обращений от жителей: поломки, заявки на ремонт, консультации. Администраторы получают обращения через удобную панель, а жители могут быстро оставить заявку через мобильное приложение или сайт.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок "Контакты" -->
+    <section id="contacts" class="py-16 px-4 md:px-8 bg-gray-50">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">Связаться с нами</h2>
+            <p class="text-xl mb-8">
+                Есть задача, которую нужно решить?<br>
+                Напишите нам в Telegram или на почту — ответим быстро и по делу.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 items-center">
+                <a href="https://t.me/devappstudio" class="inline-block bg-primary text-white px-8 py-3 rounded-md font-medium text-lg hover:bg-opacity-90 transition">Обсудить проект</a>
+                <a href="mailto:info@devappstudio.ru" class="text-primary text-lg md:ml-6 hover:underline">info@devappstudio.ru</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 border-t border-gray-200">
+        <div class="container mx-auto max-w-6xl px-4 md:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-secondary">© 2023 DevAppStudio.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

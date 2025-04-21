@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кейсы дизайна</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .cases-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .case-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .case-card h2 {
+            margin-top: 0;
+            color: #444;
+            font-size: 1.2rem;
+        }
+        .case-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .tag {
+            display: inline-block;
+            background: #eee;
+            color: #555;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Кейсы дизайна</h1>
+    
+    <div class="cases-list">
+        <a href="nft-explorer.html">
+            <div class="case-card">
+                <h2>NFT-эксплорер для Zero Colony</h2>
+                <p>Интерактивная карта с карточками объектов в футуристичном стиле</p>
+                <span class="tag">Футуристичный</span>
+                <span class="tag">Веб</span>
+            </div>
+        </a>
+        
+        <a href="habit-tracker.html">
+            <div class="case-card">
+                <h2>Трекер привычек</h2>
+                <p>Мобильное приложение для отслеживания ежедневных привычек</p>
+                <span class="tag">Мобильный</span>
+                <span class="tag">Минимализм</span>
+            </div>
+        </a>
+        
+        <a href="crypto-wallet.html">
+            <div class="case-card">
+                <h2>Криптокошелёк с оплатами</h2>
+                <p>Цифровой кошелек для хранения и использования криптовалюты</p>
+                <span class="tag">Финтех</span>
+                <span class="tag">Веб</span>
+            </div>
+        </a>
+        
+        <a href="shaverma.html">
+            <div class="case-card">
+                <h2>Сайт для шавермы "Отдуши"</h2>
+                <p>Веб-сайт кафе быстрого питания с меню и онлайн-заказом</p>
+                <span class="tag">Еда</span>
+                <span class="tag">Веб</span>
+            </div>
+        </a>
+        
+        <a href="restaurant-app.html">
+            <div class="case-card">
+                <h2>Мини-приложение для ресторанов</h2>
+                <p>Мобильное приложение для приёма заказов в ресторане</p>
+                <span class="tag">Мобильный</span>
+                <span class="tag">Еда</span>
+            </div>
+        </a>
+        
+        <a href="delivery-bot.html">
+            <div class="case-card">
+                <h2>Автоматизация службы доставки</h2>
+                <p>Интерфейс Telegram-бота для заказа доставки</p>
+                <span class="tag">Бот</span>
+                <span class="tag">Телеграм</span>
+            </div>
+        </a>
+        
+        <a href="ai-seller.html">
+            <div class="case-card">
+                <h2>ИИ-продавец для строительной компании</h2>
+                <p>Чат-бот для консультаций по строительным услугам</p>
+                <span class="tag">ИИ</span>
+                <span class="tag">Строительство</span>
+            </div>
+        </a>
+    </div>
+</body>
+</html> 

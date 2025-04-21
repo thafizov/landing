@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мини-приложение для ресторанов</title>
+    <style>
+        :root {
+            --background: #F9FAFC;
+            --surface: #FFFFFF;
+            --primary: #4B3F72;
+            --primary-light: #6B5F92;
+            --secondary: #F46036;
+            --success: #2FBF71;
+            --text-primary: #292929;
+            --text-secondary: #666666;
+            --border: #E5E5E5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .mobile-container {
+            max-width: 414px;
+            margin: 0 auto;
+            background-color: var(--surface);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            background-color: var(--surface);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .badge {
+            position: relative;
+        }
+        
+        .badge::after {
+            content: "2";
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--secondary);
+            color: white;
+            font-size: 0.7rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--surface);
+            position: sticky;
+            top: 51px;
+            z-index: 5;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .search-bar {
+            padding: 15px;
+            position: sticky;
+            top: 102px;
+            background-color: var(--surface);
+            z-index: 4;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background-color: var(--background);
+        }
+        
+        .categories {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            overflow-x: auto;
+            position: sticky;
+            top: 162px;
+            background-color: var(--surface);
+            z-index: 3;
+        }
+        
+        .category {
+            padding: 8px 15px;
+            background-color: var(--background);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .category.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .menu-items {
+            padding: 15px;
+        }
+        
+        .menu-item {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .menu-item-image {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .menu-item-details {
+            flex: 1;
+            padding: 10px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .menu-item-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .menu-item-description {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .menu-item-price {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .menu-item-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .qty-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background-color: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .quantity {
+            font-size: 0.9rem;
+        }
+        
+        .add-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-btn:hover {
+            background-color: var(--primary-light);
+        }
+        
+        /* Bottom Cart Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            background-color: var(--surface);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .cart-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-count {
+            font-weight: 500;
+        }
+        
+        .cart-total {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .checkout-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: var(--primary-light);
+        }
+        
+        /* Back Link */
+        .back-to-cases {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .back-to-cases a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header>
+            <div class="logo">RestaurantApp</div>
+            <div class="header-actions">
+                <button class="icon-btn">🔍</button>
+                <button class="icon-btn badge">🛒</button>
+                <button class="icon-btn">👤</button>
+            </div>
+        </header>
+        
+        <div class="tabs">
+            <div class="tab active">Меню</div>
+            <div class="tab">Акции</div>
+            <div class="tab">Отзывы</div>
+            <div class="tab">Информация</div>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Поиск блюд...">
+        </div>
+        
+        <div class="categories">
+            <div class="category active">Все меню</div>
+            <div class="category">Закуски</div>
+            <div class="category">Салаты</div>
+            <div class="category">Супы</div>
+            <div class="category">Горячее</div>
+            <div class="category">Десерты</div>
+            <div class="category">Напитки</div>
+        </div>
+        
+        <div class="menu-items">
+            <div class="menu-item">
+                <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="menu-item-details">
+                    <div>
+                        <h3 class="menu-item-title">Пицца "Пепперони"</h3>
+                        <p class="menu-item-description">Томатный соус, сыр Моцарелла, пепперони</p>
+                    </div>
+                    <div class="menu-item-actions">
+                        <div class="menu-item-price">450 ₽</div>
+                        <button class="add-btn">Добавить</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="menu-item-details">
+                    <div>
+                        <h3 class="menu-item-title">Бургер "Классик"</h3>
+                        <p class="menu-item-description">Говяжья котлета, сыр Чеддер, салат, томаты</p>
+                    </div>
+                    <div class="menu-item-actions">
+                        <div class="menu-item-price">380 ₽</div>
+                        <div class="quantity-control">
+                            <button class="qty-btn">-</button>
+                            <span class="quantity">1</span>
+                            <button class="qty-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1600803907087-f56d462fd26b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="menu-item-details">
+                    <div>
+                        <h3 class="menu-item-title">Цезарь с курицей</h3>
+                        <p class="menu-item-description">Салат Романо, куриное филе, гренки, сыр Пармезан</p>
+                    </div>
+                    <div class="menu-item-actions">
+                        <div class="menu-item-price">320 ₽</div>
+                        <button class="add-btn">Добавить</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1583394293214-28ded15ee548?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="menu-item-details">
+                    <div>
+                        <h3 class="menu-item-title">Паста Карбонара</h3>
+                        <p class="menu-item-description">Спагетти, бекон, сливочный соус, сыр Пармезан</p>
+                    </div>
+                    <div class="menu-item-actions">
+                        <div class="menu-item-price">360 ₽</div>
+                        <button class="add-btn">Добавить</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="menu-item-details">
+                    <div>
+                        <h3 class="menu-item-title">Стейк из лосося</h3>
+                        <p class="menu-item-description">Стейк из лосося с овощами гриль</p>
+                    </div>
+                    <div class="menu-item-actions">
+                        <div class="menu-item-price">580 ₽</div>
+                        <button class="add-btn">Добавить</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="menu-item-details">
+                    <div>
+                        <h3 class="menu-item-title">Домашний лимонад</h3>
+                        <p class="menu-item-description">Свежевыжатый лимон, мята, сироп</p>
+                    </div>
+                    <div class="menu-item-actions">
+                        <div class="menu-item-price">180 ₽</div>
+                        <div class="quantity-control">
+                            <button class="qty-btn">-</button>
+                            <span class="quantity">1</span>
+                            <button class="qty-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cart-bar">
+            <div class="cart-info">
+                <div class="cart-count">2 позиции</div>
+                <div class="cart-total">760 ₽</div>
+            </div>
+            <button class="checkout-btn">Оформить заказ</button>
+        </div>
+        
+        <div class="back-to-cases">
+            <a href="cases.html">← Назад к кейсам</a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИИ-продавец для строительной компании</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --primary-light: #007bff;
+            --secondary: #5a6268;
+            --background: #f8f9fa;
+            --surface: #ffffff;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --success: #28a745;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            min-height: calc(100vh - 60px);
+        }
+        
+        .company-info {
+            background-color: var(--surface);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .company-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .company-description {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .company-description p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .company-contacts {
+            margin-bottom: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .contact-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .contact-text {
+            font-size: 0.9rem;
+        }
+        
+        .service-list {
+            flex-grow: 1;
+        }
+        
+        .service-list h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+        
+        .service-item {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: var(--background);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .service-item:hover {
+            background-color: var(--border);
+        }
+        
+        .chat-container {
+            background-color: var(--surface);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 60px);
+        }
+        
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .operator-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--success);
+        }
+        
+        .status-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            position: relative;
+            line-height: 1.4;
+        }
+        
+        .message-system {
+            align-self: center;
+            text-align: center;
+            max-width: 100%;
+            padding: 10px;
+            background-color: var(--background);
+            color: var(--text-light);
+            font-size: 0.85rem;
+            border-radius: 20px;
+        }
+        
+        .message-bot {
+            align-self: flex-start;
+            background-color: var(--background);
+            border-bottom-left-radius: 0;
+        }
+        
+        .message-user {
+            align-self: flex-end;
+            background-color: var(--primary-light);
+            color: white;
+            border-bottom-right-radius: 0;
+        }
+        
+        .message-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .message-option {
+            background-color: var(--surface);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .message-option:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .chat-input {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .input-field {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        
+        .input-field:focus {
+            border-color: var(--primary);
+        }
+        
+        .send-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .send-button:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .lead-form {
+            background-color: var(--background);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .form-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .form-row {
+            margin-bottom: 10px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .form-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 5px;
+        }
+        
+        .form-button:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .back-to-cases {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+        
+        .back-to-cases a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 10px;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="company-info">
+            <div class="company-logo">
+                <div class="logo-title">СтройМастер</div>
+                <div class="logo-subtitle">Строительство и ремонт</div>
+            </div>
+            
+            <div class="company-description">
+                <p>Компания «СтройМастер» предоставляет полный спектр строительных услуг на территории Москвы и Московской области с 2005 года.</p>
+                <p>Мы специализируемся на строительстве домов, ремонте квартир и коммерческих помещений, а также предлагаем проектирование и дизайн интерьеров.</p>
+            </div>
+            
+            <div class="company-contacts">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-text">+7 (495) 123-45-67</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-text">info@stroymaster.ru</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-text">г. Москва, ул. Строителей, 10</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🕒</div>
+                    <div class="contact-text">Пн-Пт: 9:00 - 18:00</div>
+                </div>
+            </div>
+            
+            <div class="service-list">
+                <h3>Наши услуги</h3>
+                <div class="service-item">Строительство частных домов</div>
+                <div class="service-item">Ремонт квартир</div>
+                <div class="service-item">Ремонт офисов</div>
+                <div class="service-item">Дизайн интерьера</div>
+                <div class="service-item">Инженерные системы</div>
+                <div class="service-item">Отделочные работы</div>
+            </div>
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">Онлайн-консультант</div>
+                <div class="operator-status">
+                    <div class="status-dot"></div>
+                    <div class="status-text">ИИ-помощник онлайн</div>
+                </div>
+            </div>
+            
+            <div class="chat-messages">
+                <div class="message message-system">
+                    Начало диалога с ИИ-консультантом СтройМастер
+                </div>
+                
+                <div class="message message-bot">
+                    Здравствуйте! Я виртуальный помощник компании «СтройМастер». Готов проконсультировать вас по вопросам строительства и ремонта. Чем могу помочь?
+                    
+                    <div class="message-options">
+                        <div class="message-option">Строительство дома</div>
+                        <div class="message-option">Ремонт квартиры</div>
+                        <div class="message-option">Оценка стоимости работ</div>
+                        <div class="message-option">Сроки выполнения</div>
+                    </div>
+                </div>
+                
+                <div class="message message-user">
+                    Интересует строительство частного дома
+                </div>
+                
+                <div class="message message-bot">
+                    Отлично! Мы специализируемся на строительстве частных домов из различных материалов: кирпич, газобетон, дерево, каркасные технологии.
+                    
+                    Какой тип дома вас интересует, и на каком этапе проекта вы находитесь?
+                    
+                    <div class="message-options">
+                        <div class="message-option">Кирпичный дом</div>
+                        <div class="message-option">Деревянный дом</div>
+                        <div class="message-option">Каркасный дом</div>
+                        <div class="message-option">Газобетон</div>
+                        <div class="message-option">Только планирую</div>
+                    </div>
+                </div>
+                
+                <div class="message message-user">
+                    Интересует каркасный дом. Пока только планирую, участок уже есть
+                </div>
+                
+                <div class="message message-bot">
+                    Каркасные дома — отличный выбор! Они энергоэффективны, быстро возводятся и имеют хорошее соотношение цена/качество.
+                    
+                    Для начала нам потребуется:
+                    1. Примерная площадь дома
+                    2. Количество этажей
+                    3. Особые пожелания по планировке
+                    
+                    Также мы можем организовать встречу с нашим архитектором для детального обсуждения проекта. Предоставляем услуги "под ключ" — от проектирования до финальной отделки.
+                    
+                    Хотите узнать примерную стоимость строительства каркасного дома?
+                </div>
+                
+                <div class="message message-user">
+                    Да, интересует примерная стоимость дома площадью 150 кв.м, два этажа
+                </div>
+                
+                <div class="message message-bot">
+                    Спасибо за информацию! Для каркасного дома площадью 150 кв.м, 2 этажа с базовой отделкой примерная стоимость составит от 4 500 000 до 6 000 000 рублей (от 30 000 до 40 000 руб/кв.м).
+                    
+                    В эту стоимость входит:
+                    • Проектирование
+                    • Фундамент
+                    • Возведение каркаса
+                    • Кровля
+                    • Утепление
+                    • Коммуникации
+                    • Стандартная внутренняя отделка
+                    
+                    Точная стоимость определяется после составления проекта и может варьироваться в зависимости от:
+                    • Сложности архитектуры
+                    • Типа фундамента
+                    • Качества материалов
+                    • Уровня отделки
+                    
+                    Хотели бы вы получить более детальную консультацию от нашего специалиста?
+                    
+                    <div class="lead-form">
+                        <div class="form-title">Заполните форму для консультации</div>
+                        <div class="form-row">
+                            <label class="form-label">Ваше имя:</label>
+                            <input type="text" class="form-input" placeholder="Иван Петров">
+                        </div>
+                        <div class="form-row">
+                            <label class="form-label">Телефон:</label>
+                            <input type="text" class="form-input" placeholder="+7 (___) ___-__-__">
+                        </div>
+                        <div class="form-row">
+                            <label class="form-label">Удобное время для звонка:</label>
+                            <select class="form-input">
+                                <option>В любое время</option>
+                                <option>Утро (9:00 - 12:00)</option>
+                                <option>День (12:00 - 15:00)</option>
+                                <option>Вечер (15:00 - 18:00)</option>
+                            </select>
+                        </div>
+                        <button class="form-button">Отправить заявку</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" class="input-field" placeholder="Введите ваше сообщение...">
+                <button class="send-button">Отправить</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="back-to-cases">
+        <a href="cases.html">← Назад к кейсам</a>
+    </div>
+</body>
+</html> 

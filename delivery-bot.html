@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автоматизация службы доставки</title>
+    <style>
+        :root {
+            --telegram-bg: #1E2F3F;
+            --chat-bg: #17212B;
+            --message-in: #182533;
+            --message-out: #2B5278;
+            --accent: #64B5F6;
+            --text: #FFFFFF;
+            --text-secondary: #91A3B5;
+            --button: #303E4D;
+            --button-hover: #3C4A5A;
+            --border: #293847;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--telegram-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .telegram-container {
+            max-width: 450px;
+            margin: 20px auto;
+            background-color: var(--chat-bg);
+            min-height: 80vh;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            background-color: var(--telegram-bg);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .back-arrow {
+            font-size: 1.5rem;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .bot-info {
+            flex: 1;
+        }
+        
+        .bot-name {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .bot-status {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        
+        .message-in {
+            background-color: var(--message-in);
+            border-bottom-left-radius: 3px;
+            align-self: flex-start;
+        }
+        
+        .message-out {
+            background-color: var(--message-out);
+            border-bottom-right-radius: 3px;
+            align-self: flex-end;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            position: absolute;
+            bottom: 5px;
+            right: 15px;
+        }
+        
+        .bot-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .bot-button {
+            padding: 8px 12px;
+            background-color: var(--button);
+            border: none;
+            border-radius: 15px;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .bot-button:hover {
+            background-color: var(--button-hover);
+        }
+        
+        .message-input {
+            display: flex;
+            padding: 15px;
+            background-color: var(--telegram-bg);
+            border-top: 1px solid var(--border);
+            position: sticky;
+            bottom: 0;
+        }
+        
+        .input-field {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--message-in);
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        .input-field::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .send-button {
+            background-color: var(--accent);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            color: var(--telegram-bg);
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .attach-button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: color 0.3s;
+        }
+        
+        .attach-button:hover {
+            color: var(--accent);
+        }
+        
+        .delivery-menu {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+        
+        .menu-item {
+            min-width: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--button);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .menu-item-image {
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .menu-item-name {
+            padding: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        .cart-summary {
+            background-color: var(--message-in);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .cart-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        .delivery-form {
+            background-color: var(--message-in);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-field {
+            margin-bottom: 10px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background-color: var(--chat-bg);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        .confirm-button {
+            background-color: var(--accent);
+            color: var(--telegram-bg);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .back-to-cases {
+            text-align: center;
+            margin: 20px;
+        }
+        
+        .back-to-cases a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="telegram-container">
+        <div class="chat-header">
+            <div class="back-arrow">←</div>
+            <div class="bot-avatar">D</div>
+            <div class="bot-info">
+                <div class="bot-name">Доставка Express</div>
+                <div class="bot-status">онлайн</div>
+            </div>
+        </div>
+        
+        <div class="chat-messages">
+            <div class="message message-in">
+                Добро пожаловать в бот доставки Express! 👋<br>
+                Я помогу вам оформить заказ за несколько шагов.
+                <div class="message-time">14:30</div>
+            </div>
+            
+            <div class="message message-in">
+                Что вы хотели бы заказать? Выберите категорию или воспользуйтесь поиском.
+                <div class="bot-buttons">
+                    <button class="bot-button">🍕 Пицца</button>
+                    <button class="bot-button">🍔 Бургеры</button>
+                    <button class="bot-button">🍜 Суши</button>
+                    <button class="bot-button">🥗 Салаты</button>
+                    <button class="bot-button">🍰 Десерты</button>
+                    <button class="bot-button">🥤 Напитки</button>
+                </div>
+                <div class="message-time">14:31</div>
+            </div>
+            
+            <div class="message message-out">
+                Пицца
+                <div class="message-time">14:32</div>
+            </div>
+            
+            <div class="message message-in">
+                Отличный выбор! Вот наше меню пицц:
+                <div class="delivery-menu">
+                    <div class="menu-item">
+                        <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="menu-item-name">Пепперони</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="menu-item-name">Маргарита</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="menu-item-name">Четыре сыра</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-image" style="background-image: url('https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="menu-item-name">Гавайская</div>
+                    </div>
+                </div>
+                <div class="message-time">14:33</div>
+            </div>
+            
+            <div class="message message-out">
+                Хочу пепперони и гавайскую
+                <div class="message-time">14:34</div>
+            </div>
+            
+            <div class="message message-in">
+                Я добавил в корзину:<br>
+                - Пицца "Пепперони" (30 см)<br>
+                - Пицца "Гавайская" (30 см)
+                
+                <div class="bot-buttons">
+                    <button class="bot-button">Продолжить заказ</button>
+                    <button class="bot-button">Перейти к оформлению</button>
+                </div>
+                <div class="message-time">14:35</div>
+            </div>
+            
+            <div class="message message-out">
+                Перейти к оформлению
+                <div class="message-time">14:36</div>
+            </div>
+            
+            <div class="message message-in">
+                Ваш заказ:
+                <div class="cart-summary">
+                    <div class="cart-title">
+                        <span>Корзина</span>
+                        <span>2 позиции</span>
+                    </div>
+                    <div class="cart-item">
+                        <span>Пицца "Пепперони" (30 см)</span>
+                        <span>459 ₽</span>
+                    </div>
+                    <div class="cart-item">
+                        <span>Пицца "Гавайская" (30 см)</span>
+                        <span>499 ₽</span>
+                    </div>
+                    <div class="cart-total">
+                        <span>Итого:</span>
+                        <span>958 ₽</span>
+                    </div>
+                </div>
+                
+                Пожалуйста, укажите данные для доставки:
+                <div class="delivery-form">
+                    <div class="form-field">
+                        <label class="form-label">Адрес доставки:</label>
+                        <input type="text" class="form-input" placeholder="Улица, дом, квартира">
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Имя:</label>
+                        <input type="text" class="form-input" placeholder="Ваше имя">
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Телефон:</label>
+                        <input type="text" class="form-input" placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Способ оплаты:</label>
+                        <select class="form-input">
+                            <option>Наличными курьеру</option>
+                            <option>Картой курьеру</option>
+                            <option>Онлайн оплата</option>
+                        </select>
+                    </div>
+                    <button class="confirm-button">Подтвердить заказ</button>
+                </div>
+                <div class="message-time">14:37</div>
+            </div>
+            
+            <div class="message message-out">
+                ул. Пушкина, д. 10, кв. 42
+                Александр
+                +7 (912) 345-67-89
+                Картой курьеру
+                <div class="message-time">14:39</div>
+            </div>
+            
+            <div class="message message-in">
+                Спасибо за заказ! 🎉<br>
+                Ваш заказ #R-25478 принят и будет доставлен по адресу: ул. Пушкина, д. 10, кв. 42.<br><br>
+                Ожидаемое время доставки: 40-60 минут.<br>
+                Курьер позвонит вам перед прибытием.
+                <div class="bot-buttons">
+                    <button class="bot-button">Отслеживать заказ</button>
+                    <button class="bot-button">Отменить заказ</button>
+                    <button class="bot-button">Связаться с оператором</button>
+                </div>
+                <div class="message-time">14:40</div>
+            </div>
+        </div>
+        
+        <div class="message-input">
+            <button class="attach-button">📎</button>
+            <input type="text" class="input-field" placeholder="Сообщение...">
+            <button class="send-button">➤</button>
+        </div>
+    </div>
+    
+    <div class="back-to-cases">
+        <a href="cases.html">← Назад к кейсам</a>
+    </div>
+</body>
+</html> 
